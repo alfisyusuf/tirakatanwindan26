@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Bingkisan</title>
+    <style>
+        /* CSS Reset & Basic Styling */
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --secondary-color: #6c757d;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --text-color: #212529;
+            --subtle-text-color: #6c757d;
+            --border-color: #dee2e6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 40px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Data Item Styling */
+        .item {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-left: 5px solid var(--secondary-color); /* Default: Belum */
+            transition: all 0.3s ease;
+        }
+        .item.sudah {
+            background-color: #fdfdfd;
+            border-left-color: var(--success-color);
+        }
+        .item .info {
+            flex-grow: 1;
+        }
+        .item .nama {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+        .item.sudah .nama {
+            text-decoration: line-through;
+            color: var(--subtle-text-color);
+        }
+        .item .keterangan {
+            font-size: 0.9em;
+            color: var(--subtle-text-color);
+        }
+
+        /* Button Styling */
+        .item button {
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            border: 2px solid;
+            transition: all 0.2s;
+            white-space: nowrap; /* Mencegah teks tombol patah */
+        }
+        .item button.berikan {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+        .item button.berikan:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .item button.batalkan {
+            background-color: transparent;
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        .item button.batalkan:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .item button:disabled {
+            background-color: #e9ecef;
+            border-color: #e9ecef;
+            color: #adb5bd;
+            cursor: not-allowed;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8em;
+            color: var(--subtle-text-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🎁 Pembagian Bingkisan</h1>
+    </header>
+
+    <div class="container">
+        <div id="loading-indicator">
+            <div class="loader"></div>
+        </div>
+        <div id="data-container">
+            </div>
+    </div>
+    
+    <footer>
+        <p>Aplikasi Pencatatan Tirakatan</p>
+    </footer>
+
+    <script>
+        // --- KONFIGURASI ---
+        // !!! PENTING: Ganti URL di bawah ini dengan URL Web App Anda dari Langkah 1 !!!
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUsZqmkjclvZnD0jbu4QBffGXCZMaumOyIH4PrB3Le0Qq6OjhSgpxjqU443qu43Bah3Q/exec';
+        // --- SELESAI KONFIGURASI ---
+
+        const container = document.getElementById('data-container');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        /**
+         * Mengambil data dari Google Sheet dan menampilkannya di halaman.
+         */
+        async function fetchData() {
+            loadingIndicator.style.display = 'block';
+            container.innerHTML = ''; 
+
+            try {
+                const response = await fetch(SCRIPT_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                if (data.length === 0) {
+                    container.innerHTML = '<p style="text-align:center;">Data tidak ditemukan di spreadsheet.</p>';
+                } else {
+                    data.forEach(person => {
+                        const isDone = person.keterangan.toLowerCase() === 'sudah';
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = `item ${isDone ? 'sudah' : ''}`;
+                        itemDiv.id = `item-row-${person.rowNumber}`;
+
+                        itemDiv.innerHTML = `
+                            <div class="info">
+                                <div class="nama">${person.no}. ${person.nama}</div>
+                                <div class="keterangan">Status: ${person.keterangan}</div>
+                            </div>
+                            <button class="${isDone ? 'batalkan' : 'berikan'}" data-row="${person.rowNumber}">
+                                ${isDone ? 'Batalkan' : 'Berikan'}
+                            </button>
+                        `;
+                        container.appendChild(itemDiv);
+                    });
+                }
+            } catch (error) {
+                container.innerHTML = `<p style="text-align:center; color:red;">Gagal memuat data. Periksa koneksi atau URL Script.</p>`;
+                console.error('Error fetching data:', error);
+            } finally {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        /**
+         * Mengirim pembaruan status ke Google Sheet saat tombol diklik.
+         * @param {string} rowNumber - Nomor baris yang akan diupdate.
+         * @param {HTMLElement} buttonElement - Elemen tombol yang diklik.
+         */
+        async function updateStatus(rowNumber, buttonElement) {
+            const originalText = buttonElement.innerText;
+            buttonElement.disabled = true;
+            buttonElement.innerText = '...';
+            
+            const formData = new FormData();
+            formData.append('rowNumber', rowNumber);
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    const itemDiv = document.getElementById(`item-row-${rowNumber}`);
+                    const keteranganDiv = itemDiv.querySelector('.keterangan');
+                    const newStatus = result.newStatus;
+                    
+                    keteranganDiv.innerText = `Status: ${newStatus}`;
+                    
+                    if (newStatus.toLowerCase() === 'sudah') {
+                        itemDiv.classList.add('sudah');
+                        buttonElement.className = 'batalkan';
+                        buttonElement.innerText = 'Batalkan';
+                    } else {
+                        itemDiv.classList.remove('sudah');
+                        buttonElement.className = 'berikan';
+                        buttonElement.innerText = 'Berikan';
+                    }
+                } else {
+                    alert('Gagal mengupdate: ' + result.message);
+                    buttonElement.innerText = originalText;
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan jaringan. Gagal mengupdate.');
+                buttonElement.innerText = originalText;
+                console.error('Error updating status:', error);
+            } finally {
+                buttonElement.disabled = false;
+            }
+        }
+
+        // Menambahkan satu event listener di kontainer utama untuk menangani semua klik tombol.
+        container.addEventListener('click', function(event) {
+            // Cek apakah yang diklik adalah tombol dan punya atribut 'data-row'
+            if (event.target.tagName === 'BUTTON' && event.target.dataset.row) {
+                const row = event.target.dataset.row;
+                updateStatus(row, event.target);
+            }
+        });
+
+        // Memuat data pertama kali saat halaman dibuka.
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</body>
+</html>
