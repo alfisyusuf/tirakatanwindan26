@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Bingkisan</title>
     <style>
-        /* CSS Reset & Basic Styling */
+        /* CSS Reset & Basic Styling (Sama seperti sebelumnya) */
         :root {
             --primary-color: #007bff;
             --success-color: #28a745;
@@ -28,21 +28,42 @@
             padding: 0 15px;
         }
 
-        /* Header */
+        /* Header (Sama seperti sebelumnya) */
         header {
             background-color: var(--primary-color);
             color: white;
             padding: 20px 15px;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
         }
         header h1 {
             margin: 0;
             font-size: 1.5em;
         }
 
-        /* Loading Spinner */
+        /* --- BARU: Styling untuk Kolom Pencarian --- */
+        .search-container {
+            padding: 20px 0;
+            position: sticky; /* Membuat kolom pencarian tetap di atas saat scroll */
+            top: 0;
+            background-color: var(--background-color);
+            z-index: 10;
+        }
+        #search-input {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1em;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box; /* Agar padding tidak menambah lebar */
+        }
+        #search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+        }
+
+        /* Loading Spinner (Sama seperti sebelumnya) */
         .loader {
             border: 5px solid #f3f3f3;
             border-top: 5px solid var(--primary-color);
@@ -57,7 +78,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Data Item Styling */
+        /* Data Item Styling (Sama seperti sebelumnya) */
         .item {
             background-color: var(--card-background);
             border-radius: 8px;
@@ -66,8 +87,11 @@
             display: flex;
             align-items: center;
             padding: 15px;
-            border-left: 5px solid var(--secondary-color); /* Default: Belum */
+            border-left: 5px solid var(--secondary-color);
             transition: all 0.3s ease;
+        }
+        .item.hidden { /* --- BARU: Kelas untuk menyembunyikan item --- */
+            display: none;
         }
         .item.sudah {
             background-color: #fdfdfd;
@@ -89,7 +113,7 @@
             color: var(--subtle-text-color);
         }
 
-        /* Button Styling */
+        /* Button Styling (Sama seperti sebelumnya) */
         .item button {
             padding: 8px 16px;
             border-radius: 5px;
@@ -98,34 +122,15 @@
             font-size: 0.9em;
             border: 2px solid;
             transition: all 0.2s;
-            white-space: nowrap; /* Mencegah teks tombol patah */
+            white-space: nowrap;
         }
-        .item button.berikan {
-            background-color: var(--success-color);
-            border-color: var(--success-color);
-            color: white;
-        }
-        .item button.berikan:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-        }
-        .item button.batalkan {
-            background-color: transparent;
-            border-color: var(--secondary-color);
-            color: var(--secondary-color);
-        }
-        .item button.batalkan:hover {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        .item button:disabled {
-            background-color: #e9ecef;
-            border-color: #e9ecef;
-            color: #adb5bd;
-            cursor: not-allowed;
-        }
+        .item button.berikan { background-color: var(--success-color); border-color: var(--success-color); color: white; }
+        .item button.berikan:hover { background-color: #218838; border-color: #1e7e34; }
+        .item button.batalkan { background-color: transparent; border-color: var(--secondary-color); color: var(--secondary-color); }
+        .item button.batalkan:hover { background-color: var(--secondary-color); color: white; }
+        .item button:disabled { background-color: #e9ecef; border-color: #e9ecef; color: #adb5bd; cursor: not-allowed; }
         
-        /* Footer */
+        /* Footer (Sama seperti sebelumnya) */
         footer {
             text-align: center;
             padding: 20px;
@@ -141,6 +146,9 @@
     </header>
 
     <div class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="🔍 Cari nama...">
+        </div>
         <div id="loading-indicator">
             <div class="loader"></div>
         </div>
@@ -154,35 +162,33 @@
 
     <script>
         // --- KONFIGURASI ---
-        // !!! PENTING: Ganti URL di bawah ini dengan URL Web App Anda dari Langkah 1 !!!
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUsZqmkjclvZnD0jbu4QBffGXCZMaumOyIH4PrB3Le0Qq6OjhSgpxjqU443qu43Bah3Q/exec';
         // --- SELESAI KONFIGURASI ---
 
         const container = document.getElementById('data-container');
         const loadingIndicator = document.getElementById('loading-indicator');
+        const searchInput = document.getElementById('search-input'); // --- BARU ---
 
-        /**
-         * Mengambil data dari Google Sheet dan menampilkannya di halaman.
-         */
+        // Fungsi `fetchData` dan `updateStatus` tetap sama, tidak ada perubahan.
         async function fetchData() {
             loadingIndicator.style.display = 'block';
             container.innerHTML = ''; 
 
             try {
                 const response = await fetch(SCRIPT_URL);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 const data = await response.json();
                 
                 if (data.length === 0) {
-                    container.innerHTML = '<p style="text-align:center;">Data tidak ditemukan di spreadsheet.</p>';
+                    container.innerHTML = '<p style="text-align:center;">Data tidak ditemukan.</p>';
                 } else {
                     data.forEach(person => {
                         const isDone = person.keterangan.toLowerCase() === 'sudah';
                         const itemDiv = document.createElement('div');
                         itemDiv.className = `item ${isDone ? 'sudah' : ''}`;
                         itemDiv.id = `item-row-${person.rowNumber}`;
+                        // --- BARU: Tambahkan data-nama untuk mempermudah pencarian ---
+                        itemDiv.dataset.nama = person.nama.toLowerCase(); 
 
                         itemDiv.innerHTML = `
                             <div class="info">
@@ -197,18 +203,13 @@
                     });
                 }
             } catch (error) {
-                container.innerHTML = `<p style="text-align:center; color:red;">Gagal memuat data. Periksa koneksi atau URL Script.</p>`;
+                container.innerHTML = `<p style="text-align:center; color:red;">Gagal memuat data.</p>`;
                 console.error('Error fetching data:', error);
             } finally {
                 loadingIndicator.style.display = 'none';
             }
         }
 
-        /**
-         * Mengirim pembaruan status ke Google Sheet saat tombol diklik.
-         * @param {string} rowNumber - Nomor baris yang akan diupdate.
-         * @param {HTMLElement} buttonElement - Elemen tombol yang diklik.
-         */
         async function updateStatus(rowNumber, buttonElement) {
             const originalText = buttonElement.innerText;
             buttonElement.disabled = true;
@@ -245,7 +246,7 @@
                     buttonElement.innerText = originalText;
                 }
             } catch (error) {
-                alert('Terjadi kesalahan jaringan. Gagal mengupdate.');
+                alert('Terjadi kesalahan jaringan.');
                 buttonElement.innerText = originalText;
                 console.error('Error updating status:', error);
             } finally {
@@ -253,16 +254,33 @@
             }
         }
 
-        // Menambahkan satu event listener di kontainer utama untuk menangani semua klik tombol.
+        // --- BARU: Fungsi untuk memfilter nama berdasarkan input pencarian ---
+        function filterNames() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const allItems = document.querySelectorAll('.item');
+            
+            allItems.forEach(item => {
+                const nama = item.dataset.nama;
+                if (nama.includes(searchTerm)) {
+                    item.classList.remove('hidden'); // Tampilkan jika cocok
+                } else {
+                    item.classList.add('hidden'); // Sembunyikan jika tidak cocok
+                }
+            });
+        }
+        
+        // Menambahkan event listener ke kolom pencarian
+        searchInput.addEventListener('keyup', filterNames); // 'keyup' berarti fungsi dijalankan setiap kali tombol keyboard dilepas
+
+        // Event listener untuk tombol (Sama seperti sebelumnya)
         container.addEventListener('click', function(event) {
-            // Cek apakah yang diklik adalah tombol dan punya atribut 'data-row'
             if (event.target.tagName === 'BUTTON' && event.target.dataset.row) {
                 const row = event.target.dataset.row;
                 updateStatus(row, event.target);
             }
         });
 
-        // Memuat data pertama kali saat halaman dibuka.
+        // Memuat data pertama kali
         document.addEventListener('DOMContentLoaded', fetchData);
     </script>
 </body>
