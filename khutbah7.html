@@ -1,96 +1,679 @@
 <!DOCTYPE html>
 <html lang="jv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khutbah Dzulqa'dah - Mobile Reader</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        .arabic { font-family: 'Amiri', serif; line-height: 2.5; direction: rtl; }
-        .javanese { font-family: 'Inter', sans-serif; line-height: 1.8; }
-        body { background-color: #fcfcfc; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Khutbah Jumat — Dzulqa'dah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Noto+Serif:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --bg2: #f3ede3;
+    --ink: #1e1a14;
+    --ink2: #4a4030;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --gold-pale: #f5e9c8;
+    --green: #2d5a3d;
+    --green-light: #3d7a53;
+    --divider: #d4c5a9;
+    --arabic-size: 1.55rem;
+    --body-size: 1.05rem;
+    --label-size: 0.78rem;
+  }
+
+  [data-theme="dark"] {
+    --bg: #141210;
+    --bg2: #1e1a14;
+    --ink: #f0e9d8;
+    --ink2: #c4b896;
+    --gold: #d4a843;
+    --gold-light: #e8c86a;
+    --gold-pale: #2a2218;
+    --green: #4a9660;
+    --green-light: #5db875;
+    --divider: #3a3228;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: var(--body-size);
+    line-height: 1.85;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* HEADER */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--divider);
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .header-title {
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    color: var(--green);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .header-title small {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--ink2);
+    font-family: 'Noto Serif', serif;
+    font-weight: 300;
+  }
+
+  .header-controls {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .ctrl-btn {
+    background: var(--bg2);
+    border: 1px solid var(--divider);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 0.35rem 0.55rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1;
+    touch-action: manipulation;
+  }
+  .ctrl-btn:active { transform: scale(0.94); background: var(--gold-pale); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--gold));
+    z-index: 200;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  /* MAIN */
+  .main-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 1rem 4rem;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 2.2rem 0 1.6rem;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 2rem;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    font-family: 'Noto Serif', serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.35;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-sub {
+    font-family: 'Noto Serif', serif;
+    font-size: 0.82rem;
+    color: var(--ink2);
+    font-weight: 300;
+  }
+
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin: 1.2rem 0 0;
+    color: var(--gold);
+    font-size: 1rem;
+  }
+  .ornament::before, .ornament::after {
+    content: '';
+    height: 1px;
+    width: 48px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .ornament::after { background: linear-gradient(270deg, transparent, var(--gold)); }
+
+  /* TABLE OF CONTENTS */
+  .toc {
+    background: var(--gold-pale);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--gold);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 2rem;
+  }
+  .toc-title {
+    font-family: 'Noto Serif', serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink2);
+    margin-bottom: 0.6rem;
+  }
+  .toc a {
+    display: block;
+    color: var(--green);
+    text-decoration: none;
+    font-size: 0.88rem;
+    padding: 0.22rem 0;
+    border-bottom: 1px solid var(--divider);
+    transition: color 0.2s;
+  }
+  .toc a:last-child { border-bottom: none; }
+  .toc a:active { color: var(--gold); }
+
+  /* SECTIONS */
+  .khutbah-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .section-num {
+    background: var(--green);
+    color: #fff;
+    font-family: 'Noto Serif', serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .section-label {
+    font-family: 'Amiri', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  /* ARABIC BLOCK */
+  .arabic-block {
+    background: var(--bg2);
+    border: 1px solid var(--divider);
+    border-radius: 12px;
+    padding: 1.3rem 1rem;
+    margin: 1.2rem 0;
+    text-align: right;
+    direction: rtl;
+  }
+
+  .arabic-text {
+    font-family: 'Amiri', serif;
+    font-size: var(--arabic-size);
+    line-height: 2.2;
+    color: var(--ink);
+    word-spacing: 0.1em;
+  }
+
+  .arabic-label {
+    direction: ltr;
+    text-align: left;
+    font-family: 'Noto Serif', serif;
+    font-size: var(--label-size);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink2);
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  /* TRANSLATION */
+  .translation-block {
+    background: linear-gradient(135deg, var(--gold-pale), var(--bg));
+    border-left: 3px solid var(--gold-light);
+    border-radius: 0 10px 10px 0;
+    padding: 0.9rem 1rem;
+    margin: 0.5rem 0 1.2rem;
+    font-style: italic;
+    color: var(--ink2);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* CALLER: Jamaah */
+  .seruan {
+    background: var(--green);
+    color: #fff;
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    margin: 1.4rem 0 0.8rem;
+    font-family: 'Noto Serif', serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  /* BODY PARAGRAPH */
+  .para {
+    margin-bottom: 1.1rem;
+    color: var(--ink);
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  /* AYAT REFERENCE */
+  .ayat-ref {
+    font-family: 'Noto Serif', serif;
+    font-size: var(--label-size);
+    color: var(--gold);
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 0.3rem;
+  }
+
+  /* DIVIDER */
+  .khutbah-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 2.5rem 0;
+    color: var(--divider);
+  }
+  .khutbah-divider::before, .khutbah-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--divider);
+  }
+  .khutbah-divider span {
+    font-family: 'Amiri', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  /* ISTIRAHAT */
+  .istirahat-note {
+    text-align: center;
+    background: var(--bg2);
+    border: 1px dashed var(--divider);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    margin: 1.5rem 0;
+    font-family: 'Noto Serif', serif;
+    font-size: 0.82rem;
+    color: var(--ink2);
+    font-style: italic;
+  }
+
+  /* DOA SECTION */
+  .doa-section {
+    background: var(--bg2);
+    border: 1px solid var(--divider);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 1.2rem 0;
+  }
+  .doa-header {
+    background: var(--green);
+    color: #fff;
+    padding: 0.55rem 1rem;
+    font-family: 'Noto Serif', serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .doa-content {
+    padding: 1rem;
+    text-align: right;
+    direction: rtl;
+  }
+  .doa-content .arabic-text {
+    font-size: 1.35rem;
+    line-height: 2.1;
+  }
+
+  /* FONT SIZE CONTROL */
+  .font-size-1 { --body-size: 0.92rem; --arabic-size: 1.4rem; }
+  .font-size-2 { --body-size: 1.05rem; --arabic-size: 1.55rem; }
+  .font-size-3 { --body-size: 1.2rem; --arabic-size: 1.7rem; }
+  .font-size-4 { --body-size: 1.38rem; --arabic-size: 1.9rem; }
+
+  /* SCROLL TO TOP */
+  .back-top {
+    position: fixed;
+    bottom: 1.2rem;
+    right: 1rem;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+    touch-action: manipulation;
+  }
+  .back-top.visible { display: flex; }
+  .back-top:active { transform: scale(0.92); }
+
+  /* RESPONSIVE */
+  @media (max-width: 400px) {
+    :root { --arabic-size: 1.35rem; --body-size: 0.98rem; }
+    .hero-title { font-size: 1.35rem; }
+  }
+</style>
 </head>
-<body class="p-4 md:p-8 text-gray-900 overflow-x-hidden">
+<body class="font-size-2" id="body">
 
-    <div class="max-w-md mx-auto">
-        <header class="mb-10 text-center border-b-2 border-green-600 pb-4">
-            <h1 class="text-2xl font-bold text-green-800 javanese">Khutbah Jumat: Wulan Dzulqa'dah</h1>
-            <p class="text-sm text-gray-600">Format Layar HP - Scroll Vertikal</p>
-        </header>
+<div class="progress-bar" id="progressBar"></div>
 
-        <section class="mb-16">
-            <div class="bg-green-100 text-green-800 font-bold px-4 py-2 rounded mb-6 text-center javanese">
-                KHUTBAH PERTAMA
-            </div>
+<!-- STICKY HEADER -->
+<header class="site-header">
+  <div class="header-title">
+    Khutbah Jumat
+    <small>Dzulqa'dah — Wulan Mulya</small>
+  </div>
+  <div class="header-controls">
+    <button class="ctrl-btn" onclick="changeFont(-1)" title="Cilikaken aksara">A−</button>
+    <button class="ctrl-btn" onclick="changeFont(1)" title="Gedhekaken aksara">A+</button>
+    <button class="ctrl-btn" onclick="toggleDark()" id="darkBtn" title="Ganti tema">☾</button>
+  </div>
+</header>
 
-            <div class="arabic text-3xl mb-8 bg-white p-4 rounded-lg shadow-sm border-r-4 border-green-500">
-                الْحَمْدُ لِلَّهِ، الْحَمْدُ لِلَّهِ الَّذِيْ جَعَلَ شَهْرَ ذِي الْقَعْدَةِ مِنَ الْأَشْهُرِ الْحُرُمِ، وَفَضَّلَهُ عَلَى كَثِيْرٍ مِنَ الشُّهُوْرِ وَالْأَيَّامِ. أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيْكَ لَهُ، ذُو الْجَلَالِ وَالْإِكْرَامِ، وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّدًا عَبْدُهُ وَرَسُوْلُهُ، سَيِّدُ الْأَنَامِ.
-            </div>
+<div class="main-wrap">
 
-            <div class="arabic text-3xl mb-8 bg-white p-4 rounded-lg shadow-sm border-r-4 border-green-500">
-                اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ، مِصْبَاحِ الظَّلَامِ، وَعَلَى آلِهِ وَأَصْحَابِهِ الَّذِيْنَ هَدَوْا إِلَى دَارِ السَّلَامِ.
-            </div>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">🕌 Khutbah Jumat</div>
+    <h1 class="hero-title">Mulyakaken Wulan Dzulqa'dah<br>Kanthi Njagi Kerukunan<br>lan Nyawisaken Kesaenan</h1>
+    <p class="hero-sub">Basa Jawa Krama · Wulan Dzulqa'dah</p>
+    <div class="ornament">✦</div>
+  </div>
 
-            <div class="arabic text-3xl mb-6 bg-white p-4 rounded-lg shadow-sm border-r-4 border-green-500">
-                أَمَّا بَعْدُ، فَيَا عِبَادَ اللهِ، أُوْصِيْكُمْ وَإِيَّايَ بِتَقْوَى اللهِ عَزَّ وَجَلَّ، فَقَدْ فَازَ الْمُتَّقُوْنَ.
-            </div>
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">📋 Daftar Isi</div>
+    <a href="#khutbah1">Khutbah Pertama — Muqaddimah &amp; Isi</a>
+    <a href="#penutup1">Penutup Khutbah Pertama</a>
+    <a href="#khutbah2">Khutbah Kedua — Donga lan Shalawat</a>
+  </div>
 
-            <div class="javanese text-xl mb-8 space-y-6 leading-relaxed">
-                <p><strong>Jamaah Jum'at Rahimakumullah,</strong></p>
-                <p>Langkung rumiyin, sumangga kita sareng-sareng muji syukur dumateng ngarsanipun Allah SWT. Kita nikelaken ketaqwaan kanti nindakaken dhawuh-dhawuhipun lan nilaraken awisanipun.</p>
-                <p>Samenika kita sampun mlebet wulan <strong>Dzulqa'dah</strong>, salah satunggaling <em>Asyhurul Hurum</em> (wulan mulya). Wonten ing sasi punika, amal ibadah badhe dipun tikelaken ganjaranipun.</p>
-            </div>
-
-            <div class="arabic text-3xl mb-6 bg-yellow-50 p-4 rounded-lg shadow-sm border-r-4 border-yellow-500">
-                أَعُوْذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيْمِ: إِنَّ عِدَّةَ الشُّهُورِ عِندَ اللَّهِ اثْنَا عَشَرَ شَهْرًا فِي كِتَابِ اللَّهِ يَوْمَ خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ مِنْهَا أَرْبَعَةٌ حُرُمٌ...
-            </div>
-
-            <div class="javanese text-xl mb-8 space-y-6">
-                <p>Tembung Dzulqa'dah asalipun saking <em>"qa'ada"</em> ingkang tegesipun lenggah utawi anteng. Jaman rumiyin, wulan punika kagem leren lan nebihi pasulayan.</p>
-                <p>Pramila, sumangga kita jagi kerukunan warga. Menawi wonten pasedherekan ingkang renggang, sumangga dipun raketaken malih. Punika ugi wekdal kagem tata-tata nyawisaken kurban saderengipun mlebet wulan Dzulhijjah.</p>
-            </div>
-
-            <div class="arabic text-2xl mb-8 bg-gray-50 p-4 rounded-lg italic">
-                بَارَكَ الله لِي وَلَكُمْ فِي القُرْآنِ العَظِيمِ... فَاسْتَغْفِرُوْهُ إِنَّهُ هُوَ الْغَفُوْرُ الرَّحِيمُ.
-            </div>
-
-            <div class="h-24 flex items-center justify-center border-y border-dashed border-gray-400 my-10">
-                <span class="text-gray-500 javanese">(Khatib Pinarak Sakwetawis)</span>
-            </div>
-        </section>
-
-        <section class="mb-20">
-            <div class="bg-green-100 text-green-800 font-bold px-4 py-2 rounded mb-6 text-center javanese">
-                KHUTBAH KEDUA
-            </div>
-
-            <div class="arabic text-3xl mb-8 bg-white p-4 rounded-lg shadow-sm border-r-4 border-green-500">
-                الْحَمْدُ لِلَّهِ حَمْدًا كَثِيرًا كَمَا أَمَرَ. أَشْهَدُ أَنْ لاَ إِلَهَ إِلَّا اللهُ وَحْدَهُ لاَ شَرِيكَ لَهُ... وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّداً عَبْدُهُ وَرَسُوْلُهُ سَيِّدُ الخَلَائِقِ وَالْبَشَرِ.
-            </div>
-
-            <div class="arabic text-3xl mb-8 bg-white p-4 rounded-lg shadow-sm border-r-4 border-green-500">
-                اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى سَيِّدِنَا وَمَوْلَانَا مُحَمَّدٍ وَعَلَى آلِهِ وَأَصْحَابِهِ وَمَنْ تَبِعَهُمْ إِلَى يَوْمِ الدِّيْنِ.
-            </div>
-
-            <div class="arabic text-3xl mb-8 bg-white p-4 rounded-lg shadow-sm border-r-4 border-green-600">
-                إِنَّ اللهَ وَمَلَائِكَتَهُ يُصَلُّوْنَ عَلَى النَّبِي يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوْا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا.
-            </div>
-
-            <div class="arabic text-3xl mb-8 bg-blue-50 p-4 rounded-lg shadow-sm border-r-4 border-blue-500">
-                اللهُمَّ اغْفِرْ لِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ، وَالْمُسْلِمِينَ وَالْمُسْلِمَاتِ، الأَحْيَاءِ مِنْهُمْ وَالْأَمْوَاتِ... رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.
-            </div>
-
-            <div class="arabic text-3xl mb-8 bg-gray-100 p-4 rounded-lg border-r-4 border-gray-500">
-                عِبَادَ اللهِ، إِنَّ اللَّهَ يَأْمURُ بِالْعَدْلِ وَالْإِحْسَانِ... وَلَذِكْرُ اللَّهِ أَكْبَرُ.
-            </div>
-        </section>
+  <!-- ======================== KHUTBAH 1 ======================== -->
+  <section class="khutbah-section" id="khutbah1">
+    <div class="section-header">
+      <div class="section-num">١</div>
+      <div class="section-label">Khutbah Pertama</div>
     </div>
 
-    <div class="fixed bottom-4 right-4 space-y-2 no-print">
-        <button onclick="window.scrollTo(0,0)" class="bg-green-600 text-white p-3 rounded-full shadow-lg">↑ Top</button>
+    <!-- MUQADDIMAH ARABIC -->
+    <div class="arabic-block">
+      <div class="arabic-label">Muqaddimah</div>
+      <div class="arabic-text">
+        اَلْحَمْدُ لِلَّهِ، اَلْحَمْدُ لِلَّهِ الَّذِيْ جَعَلَ شَهْرَ ذِي الْقَعْدَةِ مِنَ الْأَشْهُرِ الْحُرُمِ، وَفَضَّلَهُ عَلَى كَثِيْرٍ مِنَ الشُّهُوْرِ وَالْأَيَّامِ.
+      </div>
     </div>
 
+    <div class="arabic-block">
+      <div class="arabic-label">Syahadat</div>
+      <div class="arabic-text">
+        أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيْكَ لَهُ، ذُو الْجَلَالِ وَالْإِكْرَامِ، وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّدًا عَبْدُهُ وَرَسُوْلُهُ، سَيِّدُ الْأَنَامِ.
+      </div>
+    </div>
+
+    <div class="arabic-block">
+      <div class="arabic-label">Shalawat</div>
+      <div class="arabic-text">
+        اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ، مِصْبَاحِ الظَّلَامِ، وَعَلَى آلِهِ وَأَصْحَابِهِ الَّذِيْنَ هَدَوْا إِلَى دَارِ السَّلَامِ.
+      </div>
+    </div>
+
+    <div class="arabic-block">
+      <div class="arabic-label">Wasiat Taqwa</div>
+      <div class="arabic-text">
+        أَمَّا بَعْدُ، فَيَا عِبَادَ اللهِ، أُوْصِيْكُمْ وَإِيَّايَ بِتَقْوَى اللهِ عَزَّ وَجَلَّ، فَقَدْ فَازَ الْمُتَّقُوْنَ.
+      </div>
+    </div>
+
+    <!-- AYAT TAQWA -->
+    <div class="arabic-block">
+      <div class="arabic-label">QS. Ali Imran: 102</div>
+      <div class="arabic-text">
+        يَا أَيُّهَا الَّذِيْنَ آمَنُوا اتَّقُوا اللهَ حَقَّ تُقَاتِهِ وَلَا تَمُوْتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُوْنَ.
+      </div>
+    </div>
+
+    <!-- BODY TEXT -->
+    <div class="seruan">Jamaah Jum'at Rahimakumullah,</div>
+
+    <p class="para">Langkung rumiyin, sumangga kita sareng-sareng ngambali muji syukur dumateng ngarsanipun Allah SWT ingkang sampun paring rahmat, hidayah, sarta kalodhangan wekdal dumateng kita sedaya, saengga ing dinten Jumat ingkang mulya punika kita saged makempal nindakaken ibadah shalat Jumat kanti wilujeng.</p>
+
+    <p class="para">Khatib tansah wasiat khususipun kagem dhiri pribadi, lan umumipun kagem jamaah sedaya, sumangga kita ningkataken keimanan lan ketaqwaan dumateng Allah SWT. Taqwa ingkang wujudipun nindakaken sedaya dhawuh-dhawuhipun, sarta nilaraken sedaya ingkang dados awisanipun.</p>
+
+    <div class="khutbah-divider"><span>❧</span></div>
+
+    <div class="seruan">Hadirin jamaah ingkang dipun mulyaaken Allah,</div>
+
+    <p class="para">Samenika kita sampun mlebet wonten ing wulan Dzulqa'dah. Wulan punika kalebet salah satunggaling wulan ingkang dipun mulyaaken dening Allah SWT, utawi ingkang asring dipun sebat <em>Asyhurul Hurum</em> (wulan-wulan haram/mulya). Wonten sekawan wulan haram, inggih punika Dzulqa'dah, Dzulhijjah, Muharram, lan Rajab.</p>
+
+    <p class="para">Allah SWT sampun paring dhawuh wonten ing Al-Qur'an:</p>
+
+    <!-- AYAT AT-TAUBAH -->
+    <div class="arabic-block">
+      <div class="arabic-label">QS. At-Taubah: 36</div>
+      <div class="arabic-text">
+        إِنَّ عِدَّةَ الشُّهُورِ عِندَ اللَّهِ اثْنَا عَشَرَ شَهْرًا فِي كِتَابِ اللَّهِ يَوْمَ خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ مِنْهَا أَرْبَعَةٌ حُرُمٌ ۚ ذَٰلِكَ الدِّينُ الْقَيِّمُ ۚ فَلَا تَظْلِمُوا فِيهِنَّ أَنفُسَكُمْ ۚ ...
+      </div>
+    </div>
+    <div class="translation-block">
+      "Satemené wilanganing sasi ing ngarsané Allah iku ana rolas sasi, ing dalem ketetepané Allah rikala Panjenengané nitahaké langit lan bumi. Ing antarané ana papat sasi haram (mulya). Yaiku agama kang jejeg, mula aja nganti sira kabeh nganiaya awakira dhéwé ing dalem sasi iku…"
+    </div>
+
+    <p class="para">Tegesipun "haram" wonten mriki inggih punika wulan ingkang dipun mulyaaken, wulan ingkang suci. Wonten ing sasi punika, duso lan tumindak awon ingkang dipun lampahi badhe dipun tikelaken ancamanipun. Kosok wangsulipun, amal ibadah lan kesaenan ingkang dipun tindakaken ugi badhe dipun tikelaken ganjaranipun dening Allah SWT.</p>
+
+    <div class="khutbah-divider"><span>❧</span></div>
+
+    <div class="seruan">Hadirin ingkang dipun rahmati Allah,</div>
+
+    <p class="para">Tembung "Dzulqa'dah" asalipun saking tembung <em>"qa'ada"</em> ingkang tegesipun lenggah utawi anteng. Ing jaman rumiyin, wulan punika dados wulan kagem leren, nebihi pasulayan, lan njagi perdamaian.</p>
+
+    <p class="para">Pramila, wulan Dzulqa'dah punika dados momentum ingkang sae sanget kagem kita sedaya supados wangsul nata katentreman, khususipun ing satengahing gesang bermasyarakat lan bertetangga. Sumangga kita jagi kerukunan warga. Menawi wonten pasedherekan ingkang renggang, sumangga dipun raketaken malih. Menawi wonten salah paham, sumangga dipun udhari kanthi musyawarah ingkang sae.</p>
+
+    <p class="para">Kajawi saking punika, wulan Dzulqa'dah inggih punika wulan persiapan sadèrèngipun mlebet wulan Dzulhijjah. Mumpung taksih ing awal wulan, sumangga kita gunakaken kagem nata lan ngrancang kesaenan. Ing tataran lingkungan utawi rukun tetangga, kita saged ngawiti musyawarah kagem nyiapaken program sosial, tata-tata pendataan kagem pambageyan kurban benjing, utawi nglumpukake dana sosial supados saged migunani kagem warga ingkang taksih mbetahaken. Kanthi administrasi lan niat ingkang tulus, peduli dumateng sesami punika badhe dados amal jariyah ingkang ageng sanget.</p>
+
+    <p class="para">Mugi-mugi kita sedaya tansah dipun paringi hidayah lan pitedah saking Allah SWT, saengga saged ngebaki wulan Dzulqa'dah punika kanthi amal ibadah, kerukunan, lan kesaenan dumateng sesami. Amin ya Rabbal 'Alamin.</p>
+  </section>
+
+  <!-- PENUTUP KHUTBAH 1 -->
+  <section class="khutbah-section" id="penutup1">
+    <div class="arabic-block">
+      <div class="arabic-label">Penutup Khutbah Pertama</div>
+      <div class="arabic-text">
+        بَارَكَ الله لِي وَلَكُمْ فِي القُرْآنِ العَظِيمِ، وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيْهِ مِنَ الآياتِ وَالذِكْرِ الْحَكِيمِ، وَتَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ تِلَاوَتَهُ إِنَّهُ هُوَ السَّمِيعُ العَلِيمُ، وَأَقُولُ قَوْلِي هَذَا فَأَسْتَغْفِرُ اللهَ العَظِيمَ لِي وَلَكُمْ، فَاسْتَغْفِرُوْهُ إِنَّهُ هُوَ الْغَفُوْرُ الرَّحِيمُ.
+      </div>
+    </div>
+
+    <div class="istirahat-note">
+      🪑 <em>Khatib pinarak sakwetawis ing antarane rong khutbah</em>
+    </div>
+  </section>
+
+  <div class="khutbah-divider"><span>✦ ✦ ✦</span></div>
+
+  <!-- ======================== KHUTBAH 2 ======================== -->
+  <section class="khutbah-section" id="khutbah2">
+    <div class="section-header">
+      <div class="section-num">٢</div>
+      <div class="section-label">Khutbah Kedua</div>
+    </div>
+
+    <div class="arabic-block">
+      <div class="arabic-label">Muqaddimah Khutbah Kedua</div>
+      <div class="arabic-text">
+        اَلْحَمْدُ لِلَّهِ حَمْدًا كَثِيرًا كَمَا أَمَرَ. أَشْهَدُ أَنْ لاَ إِلَهَ إِلَّا اللهُ وَحْدَهُ لاَ شَرِيكَ لَهُ، إِرْغَاماً لِمَنْ جَحَدَ بِهِ وَكَفَرَ. وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّداً عَبْدُهُ وَرَسُوْلُهُ سَيِّدُ الخَلَائِقِ وَالْبَشَرِ.
+      </div>
+    </div>
+
+    <div class="arabic-block">
+      <div class="arabic-label">Shalawat</div>
+      <div class="arabic-text">
+        اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى سَيِّدِنَا وَمَوْلَانَا مُحَمَّدٍ وَعَلَى آلِهِ وَأَصْحَابِهِ وَمَنْ تَبِعَهُمْ إِلَى يَوْمِ الدِّيْنِ.
+      </div>
+    </div>
+
+    <!-- DONGA-DONGA -->
+    <div class="doa-section">
+      <div class="doa-header">🤲 Donga — Shalawat Nabi</div>
+      <div class="doa-content">
+        <div class="arabic-text">
+          اللهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ، وَعَلَى أَنْبِيَائِكَ وَرُسُلِكَ وَمَلَائِكَةِ الْمُقَرَّبِينَ.
+        </div>
+      </div>
+    </div>
+
+    <div class="doa-section">
+      <div class="doa-header">🤲 Donga — Sahabat lan Khulafa'ur Rasyidin</div>
+      <div class="doa-content">
+        <div class="arabic-text">
+          وَارْضَ اللَّهُمَّ عَنِ الخُلَفَاءِ الرَّاشِدِينَ؛ أَبِي بَكْرٍ وَعُمَرَ وَعُثْمَانَ وَعَلِيٍّ، وَعَنْ بَقِيَّةِ الصَّحَابَةِ وَالتَّابِعِينَ وَتَابِعِي التَّابِعِينَ لَهُمْ بِإِحْسَانٍ إِلَى يَوْمِ الدِّيْنِ، وَارْضَ عَنَّا مَعَهُمْ بِرَحْمَتِكَ يَا أَرْحَمَ الرَّاحِمِينَ.
+        </div>
+      </div>
+    </div>
+
+    <div class="doa-section">
+      <div class="doa-header">🤲 Donga — Para Muslimin</div>
+      <div class="doa-content">
+        <div class="arabic-text">
+          اللهُمَّ اغْفِرْ لِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ، وَالْمُسْلِمِينَ وَالْمُسْلِمَاتِ، الأَحْيَاءِ مِنْهُمْ وَالْأَمْوَاتِ.
+        </div>
+      </div>
+    </div>
+
+    <div class="doa-section">
+      <div class="doa-header">🤲 Donga — Kerukunan</div>
+      <div class="doa-content">
+        <div class="arabic-text">
+          اللَّهُمَّ أَلِّفْ بَيْنَ قُلُوْبِنَا، وَأَصْلِحْ ذَاتَ بَيْنِنَا، وَاهْدِنَا سُبُلَ السَّلَامِ.
+        </div>
+      </div>
+    </div>
+
+    <div class="doa-section">
+      <div class="doa-header">🤲 Donga — Kagem Indonesia</div>
+      <div class="doa-content">
+        <div class="arabic-text">
+          اللهُمَّ ادْفَعْ عَنَّا البَلَاءَ وَالوَبَاءَ وَالزَّلَازِلَ وَالمِحَنَ، وَسُوْءَ الْفِتَنِ مَا ظَهَرَ مِنْهَا وَمَا بَطَنَ، عَنْ بَلَدِنَا اِنْدُونِيْسِيَّا خَاصَّةً، وَسَائِرِ بُلْدَانِ الْمُسْلِمِينَ عَامَّةً، يَا رَبَّ العَالَمِينَ.
+        </div>
+      </div>
+    </div>
+
+    <div class="doa-section">
+      <div class="doa-header">🤲 Donga Penutup</div>
+      <div class="doa-content">
+        <div class="arabic-text">
+          رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.
+        </div>
+      </div>
+    </div>
+
+    <!-- PENUTUP AKHIR -->
+    <div class="arabic-block">
+      <div class="arabic-label">Penutup Khutbah Kedua</div>
+      <div class="arabic-text">
+        عِبَادَ اللهِ، إِنَّ اللَّهَ يَأْمُرُ بِالْعَدْلِ وَالْإِحْسَانِ وَإِيتَاءِ ذِي الْقُرْبَى، وَيَنْهَى عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ وَالْبَغْيِ، يَعِظُكُمْ لَعَلَّكُمْ تَذَكَّرُوْنَ. وَاذْكُرُوا اللهَ العَظِيمَ يَذْكُرْكُمْ، وَاشْكُرُوهُ عَلَى نِعَمِهِ يَزِدْكُمْ، وَلَذِكْرُ اللَّهِ أَكْبَرُ.
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <div style="text-align:center; padding: 1.5rem 0; border-top: 1px solid var(--divider); font-family: 'Noto Serif', serif; font-size: 0.75rem; color: var(--ink2);">
+    Mugi-mugi khutbah punika dados manfaat · آمِيْن يَا رَبَّ الْعَالَمِيْنَ
+  </div>
+
+</div><!-- /.main-wrap -->
+
+<!-- SCROLL TO TOP -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Wangsul Nginggil">↑</button>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const doc = document.documentElement;
+    const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('backTop').classList.toggle('visible', doc.scrollTop > 300);
+  });
+
+  // Font size
+  let fontSize = 2;
+  function changeFont(dir) {
+    fontSize = Math.max(1, Math.min(4, fontSize + dir));
+    document.getElementById('body').className = 'font-size-' + fontSize;
+  }
+
+  // Dark mode
+  let dark = false;
+  function toggleDark() {
+    dark = !dark;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : '');
+    document.getElementById('darkBtn').textContent = dark ? '☀' : '☾';
+  }
+</script>
 </body>
 </html>
