@@ -2,87 +2,363 @@
 <html lang="jv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khutbah Jumat - Kurban lan Ego</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Khutbah Jumat — Kurban lan Ego</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --cream: #faf7f2;
+            --parchment: #f2ebe0;
+            --gold: #b5892a;
+            --gold-light: #d4a843;
+            --green-deep: #1a4a2e;
+            --green-mid: #2d6a4f;
+            --green-soft: #e8f3ed;
+            --green-pale: #f0f7f2;
+            --ink: #1c1c1c;
+            --ink-soft: #3a3a3a;
+            --muted: #7a7a7a;
+            --border: #d4c9b5;
+            --shadow: rgba(26,74,46,0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.8;
-            background-color: #fdfdfd;
-            color: #333;
-            margin: 0;
-            padding: 1.2em;
-            font-size: 18px;
+            background-color: var(--cream);
+            color: var(--ink);
+            font-family: 'Lora', Georgia, serif;
+            font-size: 16px;
+            line-height: 1.85;
+            min-height: 100vh;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        h1, h2, h3 {
+
+        .header {
+            background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-mid) 100%);
+            padding: 2rem 1.25rem 2.5rem;
             text-align: center;
-            color: #111;
+            position: relative;
+            overflow: hidden;
         }
-        h1 { font-size: 1.6em; margin-bottom: 0; }
-        h2 { font-size: 1.1em; font-weight: normal; margin-top: 0.5em; border-bottom: 2px solid #2e7d32; padding-bottom: 1em; color: #2e7d32; }
-        h3 { background-color: #e8f5e9; padding: 0.6em; border-radius: 8px; margin-top: 1.5em; color: #1b5e20; font-size: 1.1em; }
-        .arabic {
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .header-ornament {
+            font-size: 1.2rem;
+            color: var(--gold-light);
+            letter-spacing: 0.5em;
+            margin-bottom: 0.7rem;
+            opacity: 0.9;
+        }
+        .header h1 {
+            font-family: 'Lora', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .header-date {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.72);
+            font-style: italic;
+        }
+        .header-theme {
+            margin-top: 1rem;
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 50px;
+            padding: 0.4rem 1rem;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.92);
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 0 3rem;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 1.3rem 1.25rem 0.6rem;
+        }
+        .section-label::before, .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        .section-label span {
+            background: var(--green-deep);
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.85rem;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+
+        .instruction {
+            text-align: center;
+            font-size: 0.76rem;
+            color: var(--muted);
+            font-style: italic;
+            padding: 0.25rem 1.25rem 0.5rem;
+        }
+
+        .arabic-wrap {
+            margin: 0.75rem 1rem;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 18px var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .arabic-block {
             direction: rtl;
             text-align: right;
-            font-family: 'Traditional Arabic', serif;
-            font-size: 1.6em;
-            line-height: 2.1;
-            background-color: #f1f8e9;
-            padding: 18px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-right: 5px solid #4caf50;
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            font-size: 1.42rem;
+            line-height: 2.5;
+            background: var(--parchment);
+            padding: 1.2rem 1rem;
+            border-left: 4px solid var(--gold);
+            color: var(--ink);
         }
-        .instruction { text-align: center; font-style: italic; color: #666; margin: 1em 0; font-weight: bold; }
+        .arabic-footer {
+            background: var(--green-pale);
+            border-top: 1px solid #c8ddd0;
+        }
+        .translate-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding: 0.6rem 1rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Lora', serif;
+            font-size: 0.74rem;
+            color: var(--green-mid);
+            font-style: italic;
+            transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .translate-btn:active { background: var(--green-soft); }
+        .translate-btn .chevron { flex-shrink: 0; transition: transform 0.3s ease; }
+        .translate-btn.open .chevron { transform: rotate(180deg); }
+
+        .translation-box {
+            display: none;
+            background: var(--green-pale);
+            border-top: 1px solid #c8ddd0;
+            padding: 0.9rem 1rem;
+            font-size: 0.81rem;
+            line-height: 1.8;
+            color: var(--ink-soft);
+            font-style: italic;
+            text-align: justify;
+        }
+        .translation-box.open { display: block; }
+
+        .prose-block {
+            padding: 0.5rem 1.25rem;
+        }
+        .prose-block p {
+            margin-bottom: 0.9rem;
+            font-size: 0.94rem;
+            line-height: 1.9;
+            color: var(--ink-soft);
+            text-align: justify;
+            hyphens: auto;
+        }
+        .prose-block p:last-child { margin-bottom: 0; }
+        .prose-block strong { color: var(--green-deep); font-weight: 700; }
+
+        .pull-quote {
+            margin: 0.6rem 1.25rem 0.8rem;
+            border-left: 3px solid var(--gold);
+            padding: 0.65rem 1rem;
+            background: var(--parchment);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.87rem;
+            font-style: italic;
+            color: var(--green-deep);
+            line-height: 1.75;
+        }
+
+        .divider {
+            margin: 0.5rem 1.25rem;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border), transparent);
+        }
+
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1.5rem 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+        .footer-ornament {
+            font-size: 1rem;
+            color: var(--gold);
+            letter-spacing: 0.6em;
+            margin-bottom: 0.5rem;
+        }
+        .footer p {
+            font-size: 0.71rem;
+            color: var(--muted);
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>KHUTBAH JUMAT</h1>
-        <div style="text-align: center; font-size: 0.85em; color: #555; margin-bottom: 1.5em;">
-            <strong>Jumat, 08 Mei 2026 M / 21 Zulkaidah 1447 H</strong>
+
+<div class="header">
+    <div class="header-ornament">✦ ✦ ✦</div>
+    <h1>Khutbah Jumat</h1>
+    <div class="header-date">08 Mei 2026 M &nbsp;/&nbsp; 21 Zulkaidah 1447 H</div>
+    <div class="header-theme">Kurban: Nyembeleh Berhala Ego wonten ing Dhiri</div>
+</div>
+
+<div class="container">
+
+    <!-- ═══════════ KHUTBAH PERTAMA ═══════════ -->
+    <div class="section-label"><span>Khutbah Kaping Sepindhah</span></div>
+    <p class="instruction">(Khatib jumeneng, ngucap salam)</p>
+
+    <div class="arabic-wrap">
+        <div class="arabic-block">
+الْحَمْدُ لِلَّهِ الَّذِي جَعَلَ الْقُرْبَانَ طَرِيقًا لِلْوُصُولِ، وَسَبِيلًا لِتَزْكِيَةِ النُّفُوسِ وَالْعُقُولِ. أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ الَّذِي اخْتَبَرَ خَلِيلَهُ إِبْرَاهِيمَ بِأَعَزِّ مَطْلُوبٍ، لِيُخْرِجَ مِنْ قَلْبِهِ كُلَّ مَحْبُوبٍ سِوَى الْخَالِقِ الْمَعْبُودِ. وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ، صَاحِبُ الْخُلُقِ الْعَظِيمِ وَالْمَقَامِ الْمَحْمُودِ. اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى سَيِّدِنَا مُحَمَّدٍ، صَلَاةً تُطَهِّرُ بِهَا قُلُوبَنَا مِنَ الْأَنَانِيَّةِ وَالْكِبْرِ، وَتَرْزُقُنَا بِهَا الصَّبْرَ عِنْدَ الْبَلَاءِ وَالشُّكْرَ عِنْدَ الْيُسْرِ. أَمَّا بَعْدُ، فَيَا أَيُّهَا الْحَاضِرُونَ، أُوصِيكُمْ وَنَفْسِي بِتَقْوَى اللهِ، فَقَدْ فَازَ الْمُتَّقُونَ. قَالَ اللهُ تَعَالَى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ﴾.
         </div>
-        <h2>Tema: Kurban: Nyembeleh Berhala Ego wonten ing Dhiri</h2>
-
-        <h3>KHUTBAH KAPING SEPINDHAH</h3>
-        <p class="instruction">(Khatib jumeneng, ngucap salam)</p>
-
-        <div class="arabic">
-            الْحَمْدُ للهِ الَّذِي جَعَلَ الْقُرْبَانَ طَرِيقًا لِلْوُصُوْلِ، وَسَبِيلًا لِتَزْكِيَةِ النُّفُوسِ وَالْعُقُوْلِ. أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ الَّذِي اخْتَبَرَ خَلِيْلَهُ إِبْرَاهِيمَ بِأَعَزَّ مَطْلُوْبٍ، لِيُخْرِجَ مِنْ قَلْبِهِ كُلَّ مَحْبُوبِ سِوَى الْخَالِقِ الْمَعْبُودِ، وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّدًا عَبْدُهُ وَرَسُوْلُهُ، صَاحِبُ الْخُلُقِ الْعَظِيمِ وَالْمَقَامِ الْمَحْمُوْدِ. اللَّهُمَّ صَلَّ وَسَلَّمْ عَلَى سَيِّدِنَا مُحَمَّدٍ، صَلَاةً تُطَهَّرُ بِهَا قُلُوْبَنَا مِنَ الْأَنَانِيَّةِ وَالْكِبْرِ، وَتَرْزُقُنَا بِهَا الصَّبْرَ عِنْدَ الْبَلَاءِ وَالشُّكْرَ عِنْدَ الْيُسْرِ. أَمَّا بَعْدُ، فَيَا أَيُّهَا الْحَاضِرُوْنَ، أُوْصِيْكُمْ وَنَفْسِي بِتَقْوَى اللَّهِ، فَقَدْ فَازَ الْمُتَّقُوْنَ. قَالَ اللَّهُ تَعَالَى فِي كِتَابِهِ الْكَرِيمِ يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُون.
-        </div>
-
-        <p><strong>Jamaah shalat Jumat ingkang dirahmati Allah,</strong></p>
-        <p>Sumangga kita tansah ningkataken ketakwaan dhumateng Allah Swt. Ketakwaan ingkang mboten namung wonten ing lisan, nanging ugi nancep wonten ing dodo, ingkang ndadosaken kita tunduk dhumateng Panjenenganipun.</p>
-        
-        <p>Sakedhap malih kita badhe mlebet wulan Zulhijjah. Hakikatipun kurban punika mboten namung ritual nyembeleh kewan. Hakikat kurban inggih punika nyembeleh "berhala ego" wonten ing dhiri kita piyambak. Berhala ego punika rasa "aku" ingkang kelangkung-langkung. "Aku ingkang paling sugih, aku ingkang paling kuwasa, iki bandhaku". Kamangka Allah sampun paring dhawuh bilih sedaya ingkang wonten ing langit lan bumi punika kagungane Allah.</p>
-        
-        <p>Allah Swt. ugi ngendika bilih daging saha darah kewan kurban punika mboten bakal dugi dhumateng Panjenenganipun, nanging ketakwaan kita ingkang bakal dumugi. Allah kersa mriksani sepinten kita saged "nyembeleh" rasa kikir saha egoisme kita demi nindakaken dhawuh-Dhapipun.</p>
-        
-        <p><strong>Jamaah ingkang berbahagia,</strong></p>
-        <p>Kita saged sinau saking kisah Nabi Ibrahim a.s. Beliau nyadari bilih tresna dhumateng Ismail saged dados "berhala alit" wonten ing manahipun. Pramila, kurban punika cara kagem nresiki manahipun Ibrahim saking keterikatan donya. Ibrahim mboten nyembeleh Ismail amargi sengit, nanging nyembeleh "rasa nggadhahi" demi ketaatan dhumateng Allah.</p>
-        
-        <p>Kagem kita dinten punika, "Ismail" kita saged wujud bandha ingkang kita kumpulaken kanthi rekasa, utawi wekdal ingkang telas kagem hobi. Rasulullah paring pepeling keras kagem tiyang ingkang nggadhahi kelonggaran nanging mboten purun kurban. Mugi-mugi egoisme kita mboten langkung ageng tinimbang tresna kita dhumateng Allah Swt.</p>
-
-        <div class="arabic">
-            بَارَكَ اللَّهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ، وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيْهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ. أَقُوْلُ قَوْلِيْ هَذَا وَأَسْتَغْفِرُ اللهَ لِي وَلَكُمْ وَلِسَائِرِ الْمُسْلِمِينَ وَالْمُسْلِمَاتِ فَاسْتَغْفِرُوهُ، إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ.
-        </div>
-
-        <p class="instruction">(Khatib pinarak sekedhap)</p>
-
-        <h3>KHUTBAH KAPING KALIH</h3>
-        <p class="instruction">(Khatib jumeneng malih)</p>
-
-        <div class="arabic">
-            الْحَمْدُ لِلَّهِ حَمْدًا كَثِيرًا كَمَا أَمَرَ . أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنْ مُحَمَّدًا عَبْدُهُ وَرَسُوْلُهُ. إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ، يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلَّمُوا تَسْلِيماً. اللَّهُمَّ صَلَّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، فِي الْعَالَمِينَ إِنَّكَ حَمِيدٌ مَجِيدٌ.<br><br>
-
-            اللَّهُمَّ اغْفِرْ لِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ وَالْمُسْلِمِينَ وَالْمُسْلِمَاتِ الْأَحْيَاءِ مِنْهُمْ وَالْأَمْواتِ. اللَّهُمَّ طَهِّرْ قُلُوْبَنَا مِنَ الْأَنَانِيَّةِ وَالْكِبْرِ، وَاشْفِ صُدُوْرَنَا مِنَ الشُّرِّ وَالْبُخْلِ. اللَّهُمَّ ارْزُقْنَا سَعَةً فِي الرِّزْقِ لِنُؤَدِّيَ أُضْحِيَتَنَا خَالِصَةً لِوَجْهِكَ الْكَرِيمِ. اَللَّهُمَّ اجْعَلْ أَوْلَادَنَا كَإِسْمَاعِيلَ فِي طَاعَتِهِ وَصَبْرِهِ. رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.<br><br>
-
-            عِبَادَ اللَّهِ، إِنَّ اللَّهَ يَأْمُرُ بِالْعَدْلِ وَالْإِحْسَانِ وَإِيتَاءِ ذِي الْقُرْبَى وَيَنْهَى عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ وَالْبَغْيِ، يَعِظُكُمْ لَعَلَّكُمْ تَذَكَّرُوْنَ. فَاذْكُرُوا اللهَ الْعَظِيمَ يَذْكُرْكُمْ، وَاشْكُرُوهُ عَلَى نِعَمِهِ يَزِدْكُمْ، وَلَذِكْرُ اللَّهِ أَكْبَرُ. أَقِيمُوا الصَّلَاةِ...
+        <div class="arabic-footer">
+            <button class="translate-btn" onclick="toggleTrans(this)">
+                <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="btn-label">Tampilkan Arti</span>
+            </button>
+            <div class="translation-box">
+                Segala puji bagi Allah yang menjadikan kurban sebagai jalan untuk mendekat kepada-Nya, dan sebagai sarana penyucian jiwa dan akal. Aku bersaksi bahwa tidak ada tuhan selain Allah semata, tiada sekutu bagi-Nya — yang telah menguji kekasih-Nya Ibrahim dengan permintaan yang paling berharga, untuk mengeluarkan dari hatinya segala yang dicintai selain Sang Pencipta yang disembah. Dan aku bersaksi bahwa Nabi Muhammad ﷺ adalah hamba dan utusan-Nya, pemilik akhlak agung dan kedudukan yang terpuji. Ya Allah, limpahkanlah shalawat dan salam kepada Nabi Muhammad ﷺ, dengan shalawat yang menyucikan hati kami dari sifat egois dan sombong, dan anugerahkan kepada kami kesabaran di saat ujian serta syukur di saat kemudahan. Amma ba'du — wahai hadirin, aku berwasiat kepada kalian dan kepada diriku sendiri untuk bertakwa kepada Allah, sungguh beruntunglah orang-orang yang bertakwa. Allah berfirman: "Wahai orang-orang yang beriman, bertakwalah kepada Allah dengan sebenar-benar takwa, dan janganlah kalian mati kecuali dalam keadaan Muslim." (QS. Ali Imran: 102)
+            </div>
         </div>
     </div>
+
+    <div class="prose-block">
+        <p><strong>Jamaah shalat Jumat ingkang dirahmati Allah,</strong></p>
+        <p>Sumangga kita tansah ningkataken ketakwaan dhumateng Allah Swt. Ketakwaan ingkang mboten namung wonten ing lisan, nanging ugi nancep wonten ing dodo, ingkang ndadosaken kita tunduk dhumateng Panjenenganipun.</p>
+        <p>Sakedhap malih kita badhe mlebet wulan Zulhijjah. Hakikatipun kurban punika mboten namung ritual nyembeleh kewan. Hakikat kurban inggih punika nyembeleh <em>"berhala ego"</em> wonten ing dhiri kita piyambak. Berhala ego punika rasa <em>"aku"</em> ingkang kelangkung-langkung.</p>
+    </div>
+
+    <div class="pull-quote">
+        "Aku ingkang paling sugih, aku ingkang paling kuwasa, iki bandhaku" — kamangka Allah sampun paring dhawuh bilih sedaya ingkang wonten ing langit lan bumi punika kagungane Allah.
+    </div>
+
+    <div class="prose-block">
+        <p>Allah Swt. ugi ngendika bilih daging saha darah kewan kurban punika mboten bakal dugi dhumateng Panjenenganipun, nanging ketakwaan kita ingkang bakal dumugi. Allah kersa mriksani sepinten kita saged "nyembeleh" rasa kikir saha egoisme kita demi nindakaken dhawuh-Dhapipun.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="prose-block">
+        <p><strong>Jamaah ingkang berbahagia,</strong></p>
+        <p>Kita saged sinau saking kisah Nabi Ibrahim a.s. Beliau nyadari bilih tresna dhumateng Ismail saged dados "berhala alit" wonten ing manahipun. Pramila, kurban punika cara kagem nresiki manahipun Ibrahim saking keterikatan donya. Ibrahim mboten nyembeleh Ismail amargi sengit, nanging nyembeleh "rasa nggadhahi" demi ketaatan dhumateng Allah.</p>
+        <p>Kagem kita dinten punika, "Ismail" kita saged wujud bandha ingkang kita kumpulaken kanthi rekasa, utawi wekdal ingkang telas kagem hobi. Rasulullah paring pepeling keras kagem tiyang ingkang nggadhahi kelonggaran nanging mboten purun kurban. Mugi-mugi egoisme kita mboten langkung ageng tinimbang tresna kita dhumateng Allah Swt.</p>
+    </div>
+
+    <div class="arabic-wrap">
+        <div class="arabic-block">
+بَارَكَ اللهُ لِي وَلَكُمْ فِي الْقُرْآنِ الْعَظِيمِ، وَنَفَعَنِي وَإِيَّاكُمْ بِمَا فِيهِ مِنَ الْآيَاتِ وَالذِّكْرِ الْحَكِيمِ. أَقُولُ قَوْلِي هَذَا وَأَسْتَغْفِرُ اللهَ لِي وَلَكُمْ وَلِسَائِرِ الْمُسْلِمِينَ وَالْمُسْلِمَاتِ فَاسْتَغْفِرُوهُ، إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ.
+        </div>
+        <div class="arabic-footer">
+            <button class="translate-btn" onclick="toggleTrans(this)">
+                <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="btn-label">Tampilkan Arti</span>
+            </button>
+            <div class="translation-box">
+                Semoga Allah memberkahi aku dan kalian melalui Al-Qur'an yang agung, dan semoga Allah memberikan manfaat kepada kita semua melalui ayat-ayat dan peringatan bijaksana yang terkandung di dalamnya. Aku ucapkan ini dan aku memohon ampun kepada Allah untuk diriku, kalian, dan seluruh kaum Muslimin dan Muslimat. Mohonlah ampun kepada-Nya, sesungguhnya Dia Maha Pengampun lagi Maha Penyayang.
+            </div>
+        </div>
+    </div>
+
+    <p class="instruction">(Khatib pinarak sekedhap)</p>
+
+    <!-- ═══════════ KHUTBAH KEDUA ═══════════ -->
+    <div class="section-label"><span>Khutbah Kaping Kalih</span></div>
+    <p class="instruction">(Khatib jumeneng malih)</p>
+
+    <div class="arabic-wrap">
+        <div class="arabic-block">
+الْحَمْدُ لِلَّهِ حَمْدًا كَثِيرًا كَمَا أَمَرَ. أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. إِنَّ اللهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ، يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا. اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، فِي الْعَالَمِينَ إِنَّكَ حَمِيدٌ مَجِيدٌ.
+        </div>
+        <div class="arabic-footer">
+            <button class="translate-btn" onclick="toggleTrans(this)">
+                <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="btn-label">Tampilkan Arti</span>
+            </button>
+            <div class="translation-box">
+                Segala puji bagi Allah dengan pujian yang banyak sebagaimana Dia perintahkan. Aku bersaksi bahwa tidak ada tuhan selain Allah semata, tiada sekutu bagi-Nya. Dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya. Sesungguhnya Allah dan para malaikat-Nya bershalawat atas Nabi. Wahai orang-orang yang beriman, bershalawatlah atasnya dan ucapkanlah salam dengan sepenuh-penuhnya. Ya Allah, berikanlah shalawat kepada Muhammad dan keluarga Muhammad, sebagaimana Engkau telah memberikan shalawat kepada Ibrahim dan keluarga Ibrahim. Dan berkahilah Muhammad dan keluarga Muhammad, sebagaimana Engkau telah memberkahi Ibrahim dan keluarga Ibrahim, di seluruh alam semesta. Sesungguhnya Engkau Maha Terpuji lagi Maha Mulia.
+            </div>
+        </div>
+    </div>
+
+    <div class="arabic-wrap">
+        <div class="arabic-block">
+اللَّهُمَّ اغْفِرْ لِلْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ وَالْمُسْلِمِينَ وَالْمُسْلِمَاتِ الْأَحْيَاءِ مِنْهُمْ وَالْأَمْوَاتِ. اللَّهُمَّ طَهِّرْ قُلُوبَنَا مِنَ الْأَنَانِيَّةِ وَالْكِبْرِ، وَاشْفِ صُدُورَنَا مِنَ الشَّرِّ وَالْبُخْلِ. اللَّهُمَّ ارْزُقْنَا سَعَةً فِي الرِّزْقِ لِنُؤَدِّيَ أُضْحِيَتَنَا خَالِصَةً لِوَجْهِكَ الْكَرِيمِ. اللَّهُمَّ اجْعَلْ أَوْلَادَنَا كَإِسْمَاعِيلَ فِي طَاعَتِهِ وَصَبْرِهِ. رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.
+        </div>
+        <div class="arabic-footer">
+            <button class="translate-btn" onclick="toggleTrans(this)">
+                <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="btn-label">Tampilkan Arti</span>
+            </button>
+            <div class="translation-box">
+                Ya Allah, ampunilah orang-orang mukmin laki-laki dan perempuan, orang-orang Muslim laki-laki dan perempuan, baik yang masih hidup maupun yang telah wafat. Ya Allah, sucikanlah hati kami dari sifat egois dan sombong, dan sembuhkanlah dada kami dari keburukan dan kebakhilan. Ya Allah, anugerahkan kepada kami keluasan rezeki agar kami dapat melaksanakan kurban dengan ikhlas karena mengharap ridha-Mu yang Mulia. Ya Allah, jadikanlah anak-anak kami seperti Ismail dalam ketaatan dan kesabarannya. Ya Tuhan kami, berikanlah kepada kami kebaikan di dunia dan kebaikan di akhirat, dan peliharalah kami dari siksa api neraka.
+            </div>
+        </div>
+    </div>
+
+    <div class="arabic-wrap">
+        <div class="arabic-block">
+عِبَادَ اللهِ، إِنَّ اللهَ يَأْمُرُ بِالْعَدْلِ وَالْإِحْسَانِ وَإِيتَاءِ ذِي الْقُرْبَى وَيَنْهَى عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ وَالْبَغْيِ، يَعِظُكُمْ لَعَلَّكُمْ تَذَكَّرُونَ. فَاذْكُرُوا اللهَ الْعَظِيمَ يَذْكُرْكُمْ، وَاشْكُرُوهُ عَلَى نِعَمِهِ يَزِدْكُمْ، وَلَذِكْرُ اللهِ أَكْبَرُ. أَقِيمُوا الصَّلَاةَ.
+        </div>
+        <div class="arabic-footer">
+            <button class="translate-btn" onclick="toggleTrans(this)">
+                <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                <span class="btn-label">Tampilkan Arti</span>
+            </button>
+            <div class="translation-box">
+                Wahai hamba-hamba Allah, sesungguhnya Allah memerintahkan berlaku adil, berbuat ihsan (kebaikan), dan memberikan kepada kaum kerabat. Dan Dia melarang perbuatan keji, kemungkaran, dan permusuhan. Allah memberi pengajaran kepada kalian agar kalian mengambil pelajaran. Maka ingatlah Allah Yang Maha Agung, niscaya Dia akan mengingat kalian. Bersyukurlah atas nikmat-Nya, niscaya Dia akan menambahnya. Dan sungguh, dzikir kepada Allah adalah yang terbesar. Dirikanlah shalat.
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-ornament">— ✦ —</div>
+        <p>Masjid &nbsp;·&nbsp; 08 Mei 2026 M / 21 Zulkaidah 1447 H</p>
+    </div>
+
+</div>
+
+<script>
+    function toggleTrans(btn) {
+        const box = btn.nextElementSibling;
+        const isOpen = box.classList.contains('open');
+        box.classList.toggle('open', !isOpen);
+        btn.classList.toggle('open', !isOpen);
+        btn.querySelector('.btn-label').textContent = isOpen ? 'Tampilkan Arti' : 'Sembunyikan Arti';
+    }
+</script>
+
 </body>
 </html>
