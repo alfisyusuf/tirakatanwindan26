@@ -3,258 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rundown Acara Tirakatan Kemerdekaan</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-
+    <title>Rundown Malam Tirakatan HUT RI 81</title>
     <style>
         :root {
-            --bg-color: #f8f9fa; /* Latar belakang sedikit abu-abu */
-            --line-color: #dee2e6; /* Warna garis timeline */
-            --dot-color: #e53935; /* Warna titik pada timeline (merah) */
-            --card-bg: #ffffff;
-            --text-color: #212529; /* Warna teks utama (lebih gelap) */
-            --subtle-text: #6c757d; /* Warna teks untuk keterangan */
-            --shadow-color: rgba(0, 0, 0, 0.06);
+            --primary-red: #d32f2f;
+            --dark-red: #b71c1c;
+            --bg-color: #f8f9fa;
+            --text-main: #333333;
+        }
+        
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
             margin: 0;
-            padding: 24px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+            padding: 0;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+            padding: 40px 20px 60px;
             text-align: center;
-            margin-bottom: 40px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle flag effect in header background */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 50%);
         }
 
         header h1 {
-            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            margin: 0 0 8px;
+            line-height: 1.4;
             font-weight: 700;
-            font-size: 2.25em;
-            color: var(--dot-color);
-            margin: 0;
-            /* Efek gradasi halus pada teks */
-            background: linear-gradient(45deg, #B71C1C, #e53935);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
         }
 
         header p {
-            margin-top: 8px;
-            color: var(--subtle-text);
-            font-size: 1.1em;
+            font-size: 0.9rem;
+            margin: 0;
+            opacity: 0.9;
+            font-weight: 400;
         }
 
-        #loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2em;
-            color: var(--subtle-text);
-        }
-        
-        /* Kontainer untuk timeline */
-        .timeline-container {
+        .container {
+            background: white;
+            margin: -40px 20px 30px;
+            padding: 25px 20px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
             position: relative;
-            padding-left: 50px; /* Ruang untuk waktu */
+            z-index: 10;
+            flex-grow: 1;
         }
 
-        /* Garis vertikal timeline */
-        .timeline-container::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 3px;
-            height: calc(100% - 20px);
-            background-color: var(--line-color);
-            border-radius: 2px;
+        .section-title {
+            text-align: center;
+            color: var(--dark-red);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .rundown-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .rundown-item {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            margin-bottom: 20px;
-            padding: 20px 24px;
-            position: relative;
-            border: 1px solid #e9ecef;
-            box-shadow: 0 4px 15px var(--shadow-color);
-            /* Animasi saat item muncul */
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        /* Menambahkan delay animasi untuk setiap item */
-        .rundown-item:nth-child(2) { animation-delay: 0.1s; }
-        .rundown-item:nth-child(3) { animation-delay: 0.2s; }
-        .rundown-item:nth-child(4) { animation-delay: 0.3s; }
-        /* dst. */
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Titik pada timeline */
-        .rundown-item::before {
-            content: '';
-            position: absolute;
-            top: 22px;
-            left: -46px; /* (50px padding - 6px radius) - 3px line width = 41 + 5 */
-            width: 15px;
-            height: 15px;
-            background-color: var(--dot-color);
-            border: 3px solid var(--bg-color);
-            border-radius: 50%;
-            z-index: 1;
-        }
-        
-        .item-content {
             display: flex;
-            flex-direction: column;
+            align-items: flex-start;
+            background: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #f0f0f0;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        .item-content .waktu {
-            position: absolute;
-            left: -80px; /* Posisi waktu di sebelah kiri garis */
-            top: 16px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1em;
-            color: var(--dot-color);
-            width: 60px; /* Lebar tetap untuk waktu */
-            text-align: center;
-        }
-        
-        .item-content .acara {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1.25em;
-            margin: 0 0 8px 0;
-            color: var(--text-color);
+        .rundown-item:active {
+            transform: scale(0.98);
+            background-color: #fafafa;
         }
 
-        .item-content .keterangan {
-            margin: 0;
-            font-size: 1em;
-            color: var(--subtle-text);
-            line-height: 1.6;
+        .number-badge {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(211, 47, 47, 0.3);
         }
-        
+
+        .content {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #444;
+            padding-top: 5px;
+        }
+
+        .tentative {
+            display: inline-block;
+            font-size: 0.75rem;
+            color: #d32f2f;
+            background-color: #ffebee;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
         footer {
             text-align: center;
-            margin-top: 40px;
-            color: #aaa;
-            font-size: 0.9em;
+            padding: 20px;
+            margin-top: auto;
         }
 
-        /* Penyesuaian untuk layar yang lebih kecil */
-        @media (max-width: 600px) {
-            body { padding: 16px; }
-            header h1 { font-size: 1.8em; }
-            header p { font-size: 1em; }
-
-            .timeline-container { padding-left: 20px; }
-            
-            .rundown-item::before { left: -14px; }
-
-            .item-content .waktu {
-                position: static; /* Waktu kembali ke dalam card */
-                left: auto;
-                top: auto;
-                width: auto;
-                text-align: left;
-                margin-bottom: 12px;
-                padding: 4px 10px;
-                background-color: #f1f3f5;
-                border-radius: 6px;
-                font-size: 0.9em;
-                display: inline-block; /* Agar background tidak full-width */
-            }
+        footer h2 {
+            margin: 0;
+            color: var(--primary-red);
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            font-weight: 800;
         }
+        
+        footer p {
+            margin: 5px 0 0;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Rundown Acara</h1>
-            <p>Tirakatan Malam 17 Agustus</p>
-        </header>
+    <header>
+        <h1>MALAM TIRAKATAN<br>HUT KE-81 KEMERDEKAAN RI</h1>
+        <p>Kabupaten Sukoharjo - Tahun 2026</p>
+    </header>
 
-        <div id="loading">Memuat data rundown... ⏳</div>
-        <div class="timeline-container" id="rundown-container">
-            </div>
+    <div class="container">
+        <div class="section-title">Atur Acara[span_0](start_span)[span_0](end_span)</div>
         
-        <footer>
-            <p>Data diperbarui secara langsung dari Google Spreadsheet.</p>
-        </footer>
+        <div class="rundown-list">
+            <div class="rundown-item">
+                <div class="number-badge">1</div>
+                <div class="content">Pengantar Pembawa Acara[span_1](start_span)[span_1](end_span)</div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">2</div>
+                <div class="content">Laporan Panitia penyelenggara[span_2](start_span)[span_2](end_span)</div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">3</div>
+                <div class="content">Sambutan Bupati dibacakan Camat/Sekcam, Kades atau Lurah, Ketua RW atau Ketua RT[span_3](start_span)[span_3](end_span)</div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">4</div>
+                <div class="content">
+                    Kilas balik dari tokoh masyarakat[span_4](start_span)[span_4](end_span)
+                    <br><span class="tentative">Tentative[span_5](start_span)[span_5](end_span)</span>
+                </div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">5</div>
+                <div class="content">Do'a[span_6](start_span)[span_6](end_span)</div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">6</div>
+                <div class="content">Pemotongan Tumpeng oleh Camat/Sekcam, Kades atau Lurah, Ketua RW atau Ketua RT[span_7](start_span)[span_7](end_span)</div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">7</div>
+                <div class="content">Istirahat[span_8](start_span)[span_8](end_span)</div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">8</div>
+                <div class="content">Penutup[span_9](start_span)[span_9](end_span)</div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        // ======================================================================
-        // GANTI URL DI BAWAH INI dengan URL Web App dari Google Apps Script Anda
-        // ======================================================================
-        const SPREADSHEET_URL = 'https://script.google.com/macros/s/AKfycbyJo3iyPhtezp_gewkvaeRHAezvnAR_2Ip500uS_AmHu0Zgv8LyJ8uR3j8UXC7pFVjcgQ/exec'; 
-        // ======================================================================
-
-        const container = document.getElementById('rundown-container');
-        const loadingIndicator = document.getElementById('loading');
-
-        async function fetchRundown() {
-            try {
-                const response = await fetch(SPREADSHEET_URL);
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                const data = await response.json();
-
-                container.innerHTML = ''; 
-
-                if (data.length === 0) {
-                     container.innerHTML = '<p>Tidak ada data acara.</p>';
-                } else {
-                    let delay = 0;
-                    data.forEach(item => {
-                        const rundownItem = document.createElement('div');
-                        rundownItem.className = 'rundown-item';
-                        // Menambahkan delay animasi secara dinamis
-                        rundownItem.style.animationDelay = `${delay}s`;
-
-                        rundownItem.innerHTML = `
-                            <div class="item-content">
-                                <span class="waktu">${item.waktu || '---'}</span>
-                                <h2 class="acara">${item.acara || 'Tanpa Judul'}</h2>
-                                <p class="keterangan">${item.keterangan || ''}</p>
-                            </div>
-                        `;
-                        container.appendChild(rundownItem);
-                        delay += 0.1; // Tambah delay untuk item berikutnya
-                    });
-                }
-
-            } catch (error) {
-                console.error('Gagal mengambil data:', error);
-                container.innerHTML = `<p style="color: red; text-align: center;">Maaf, terjadi kesalahan saat memuat data rundown.</p>`;
-            } finally {
-                loadingIndicator.style.display = 'none';
-            }
-        }
-        document.addEventListener('DOMContentLoaded', fetchRundown);
-    </script>
+    <footer>
+        <h2>MERDEKA! 🇮🇩</h2>
+        <p>17 Agustus 2026</p>
+    </footer>
 
 </body>
 </html>
