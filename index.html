@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rundown Malam Tirakatan HUT RI 81</title>
-
     <style>
         :root {
             --primary-red: #d32f2f;
@@ -12,7 +11,7 @@
             --bg-color: #f8f9fa;
             --text-main: #333333;
         }
-
+        
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -41,15 +40,12 @@
             overflow: hidden;
         }
 
+        /* Subtle flag effect in header background */
         header::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: radial-gradient(
-                circle at top right,
-                rgba(255, 255, 255, 0.1),
-                transparent 50%
-            );
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 50%);
         }
 
         header h1 {
@@ -72,7 +68,7 @@
             margin: -40px 20px 30px;
             padding: 25px 20px;
             border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
             position: relative;
             z-index: 10;
             flex-grow: 1;
@@ -105,18 +101,14 @@
             border: 1px solid #f0f0f0;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-
+        
         .rundown-item:active {
             transform: scale(0.98);
             background-color: #fafafa;
         }
 
         .number-badge {
-            background: linear-gradient(
-                135deg,
-                var(--primary-red),
-                var(--dark-red)
-            );
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
             color: white;
             min-width: 32px;
             height: 32px;
@@ -136,17 +128,19 @@
             line-height: 1.5;
             color: #444;
             padding-top: 5px;
+            width: 100%;
         }
-
-        .tentative {
-            display: inline-block;
-            font-size: 0.75rem;
-            color: #d32f2f;
-            background-color: #ffebee;
-            padding: 2px 8px;
-            border-radius: 12px;
+        
+        .note {
+            display: block;
+            font-size: 0.8rem;
+            color: #666;
             margin-top: 6px;
-            font-weight: 600;
+            padding: 6px 10px;
+            background-color: #f9f9f9;
+            border-left: 3px solid #ffb300;
+            border-radius: 4px;
+            font-style: italic;
         }
 
         footer {
@@ -162,99 +156,92 @@
             letter-spacing: 2px;
             font-weight: 800;
         }
-
+        
         footer p {
             margin: 5px 0 0;
             font-size: 0.8rem;
             color: #888;
         }
+
     </style>
 </head>
-
 <body>
 
     <header>
-        <h1>
-            MALAM TIRAKATAN<br>
-            HUT KE-81 KEMERDEKAAN RI
-        </h1>
+        <h1>MALAM TIRAKATAN<br>HUT KE-81 KEMERDEKAAN RI</h1>
         <p>Kabupaten Sukoharjo - Tahun 2026</p>
     </header>
 
     <div class="container">
-
-        <div class="section-title">
-            Atur Acara
-        </div>
-
+        <div class="section-title">Atur Acara</div>
+        
         <div class="rundown-list">
-
             <div class="rundown-item">
                 <div class="number-badge">1</div>
-                <div class="content">
-                    Pengantar Pembawa Acara
-                </div>
+                <div class="content">Pengantar Pembawa Acara</div>
             </div>
-
+            
             <div class="rundown-item">
                 <div class="number-badge">2</div>
-                <div class="content">
-                    Laporan Panitia penyelenggara
-                </div>
+                <div class="content">Menyanyikan Lagu Indonesia Raya</div>
             </div>
-
+            
             <div class="rundown-item">
                 <div class="number-badge">3</div>
                 <div class="content">
-                    Sambutan Bupati dibacakan Camat/Sekcam,
-                    Kades atau Lurah, Ketua RW atau Ketua RT
+                    Laporan Panitia Penyelenggara
+                    <span class="note">Disampaikan oleh Pak RT (sekaligus merangkap pembacaan Sambutan Bupati)</span>
                 </div>
             </div>
-
+            
             <div class="rundown-item">
                 <div class="number-badge">4</div>
                 <div class="content">
-                    Kilas balik dari tokoh masyarakat
-                    <br>
-                    <span class="tentative">Tentative</span>
+                    Sambutan-sambutan
+                    <span class="note">1. Sambutan Bupati (dibacakan oleh Pak RT)<br>2. Sambutan Pak RW (menyesuaikan kedatangan Pak RW)</span>
                 </div>
             </div>
-
+            
             <div class="rundown-item">
                 <div class="number-badge">5</div>
-                <div class="content">
-                    Do'a
-                </div>
+                <div class="content">KUR: semua lagu</div>
             </div>
-
+            
             <div class="rundown-item">
                 <div class="number-badge">6</div>
-                <div class="content">
-                    Pemotongan Tumpeng oleh Camat/Sekcam,
-                    Kades atau Lurah, Ketua RW atau Ketua RT
-                </div>
+                <div class="content">Gedug Lesung (Sesi 1)</div>
             </div>
-
+            
             <div class="rundown-item">
                 <div class="number-badge">7</div>
-                <div class="content">
-                    Istirahat
-                </div>
+                <div class="content">Gerak dan Lagu</div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">8</div>
+                <div class="content">Gedug Lesung (Sesi 2)</div>
+            </div>
+            
+            <div class="rundown-item">
+                <div class="number-badge">9</div>
+                <div class="content">Doa</div>
             </div>
 
             <div class="rundown-item">
-                <div class="number-badge">8</div>
-                <div class="content">
-                    Penutup
-                </div>
+                <div class="number-badge">10</div>
+                <div class="content">Pemotongan Tumpeng</div>
             </div>
 
+            <div class="rundown-item">
+                <div class="number-badge">11</div>
+                <div class="content">Penutup</div>
+            </div>
         </div>
     </div>
 
     <footer>
         <h2>MERDEKA! 🇮🇩</h2>
-        <p>17 Agustus 2026</p>
+        <p>16 Agustus 2026</p>
     </footer>
 
 </body>
